@@ -24,12 +24,15 @@ function initGame() {
     board.innerHTML = '';
     cards.forEach((url, index) => {
         const card = document.createElement('div');
+        card.dataset.value = url;
         card.classList.add('card');
         card.dataset.index = index;
-        
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
         const frontFace = document.createElement('img');
         frontFace.src = url;
         frontFace.classList.add('front-face');
+
         card.appendChild(frontFace);
         board.appendChild(card);
     });
