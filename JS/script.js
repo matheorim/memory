@@ -7,6 +7,9 @@ let lockBoard = false;
 let moves = 0;
 let matchedCount = 0;
 
+let seconds = 0;
+let timerInterval = null;
+
 const urls = [];
 
 for(let i = 0; i < 8; i++) {
@@ -79,6 +82,27 @@ function checkForMatch() {
             secondCard = null;
             lockBoard = false;
         },800);
+    }
+}
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`; 
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        seconds++;
+        document.getElementById('timer').textContent = formatTime(seconds);
+    },1000);
+}
+
+function checkVictory() {
+    if (matchedCount === urls.length) {
+        clearInterval(timerInterval);
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = `Bien joué! Vous avez gagné en ${moves} mouvements et ${formatTime(seconds)}.`;
     }
 }
 
