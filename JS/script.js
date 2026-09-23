@@ -18,6 +18,24 @@ function shuffle(array) {
     return array;
 }
 
-cards = shuffle(cards);
+function initGame() {
+    cards = shuffle(cards);
+    const board = document.getElementById('game-board'); 
+    board.innerHTML = '';
+    cards.forEach((url, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.index = index;
+        
+        const frontFace = document.createElement('img');
+        frontFace.src = url;
+        frontFace.classList.add('front-face');
+        card.appendChild(frontFace);
+        board.appendChild(card);
+    });
+}
+
+
+initGame();
 console.log(urls);
 console.log(cards);
