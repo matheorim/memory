@@ -1,6 +1,12 @@
 let dimension = 50;
 let imgStart = Math.floor(Math.random() * 100);
 
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+let matchedCount = 0;
+
 const urls = [];
 
 for(let i = 0; i < 8; i++) {
@@ -29,15 +35,52 @@ function initGame() {
         card.dataset.index = index;
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
-        const frontFace = document.createElement('img');
-        frontFace.src = url;
-        frontFace.classList.add('front-face');
-
-        card.appendChild(frontFace);
+        card.addEventListener('click', () => handleCardClick(card));
         board.appendChild(card);
     });
 }
 
+
+function handleCardClick(card) {
+    if (lockBoard || card === firstCard || card.classList.contains('matched')) {
+        return;
+    }
+    if (!card.querySelector('img')) {
+        const frontFace = document.createElement('img');
+        frontFace.src = card.dataset.value;
+        frontFace.classList.add('front-face');
+        card.appendChild(frontFace);
+    }
+    if (firstCard === null) {
+        firstCard = card;
+    }
+    else if (secondCard === null) {
+        secondCard = card;
+        lockBoard = true;
+        moves++;
+        checkForMatch();
+    }
+}
+
+function checkForMatch() {
+    if (firstCard.dataset.value === secondCard.dataset.value) {
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        matchedCount++;
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+    }  
+    else{
+        setTimeout(() => {
+            firstCard.innerHTML = '';
+            secondCard.innerHTML = '';
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+        },800);
+    }
+}
 
 initGame();
 console.log(urls);
