@@ -1,6 +1,6 @@
 # Jeu de Memory
 
-**Démo en ligne :** [https://github.com/matheorim/memory](https://github.com/matheorim/memory)
+**Démo en ligne :** [https://matheorim.github.io/memory/](https://matheorim.github.io/memory/)
 
 ## Description
 Une application web interactive du jeu de memory développée en JavaScript. Le joueur doit retourner des cartes pour former des paires d'images identiques générées aléatoirement via une API. La partie se termine lorsque toutes les paires sont trouvées, avec un affichage du temps écoulé et du nombre de coups joués.
