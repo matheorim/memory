@@ -1,4 +1,4 @@
-let dimension = 50;
+let dimension = 150;
 let imgStart = Math.floor(Math.random() * 100);
 
 let firstCard = null;
@@ -31,6 +31,17 @@ function initGame() {
     cards = shuffle(cards);
     const board = document.getElementById('game-board'); 
     board.innerHTML = '';
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+    moves = 0;
+    matchedCount = 0;
+    seconds = 0;
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    document.getElementById('timer').textContent = formatTime(0);
+    document.getElementById('result').textContent = '';
     cards.forEach((url, index) => {
         const card = document.createElement('div');
         card.dataset.value = url;
@@ -39,8 +50,15 @@ function initGame() {
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.addEventListener('click', () => handleCardClick(card));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleCardClick(card);
+            }
+        });
         board.appendChild(card);
     });
+    startTimer();
 }
 
 
@@ -61,11 +79,11 @@ function handleCardClick(card) {
         secondCard = card;
         lockBoard = true;
         moves++;
-        checkForMatch();
+        checkMatch();
     }
 }
 
-function checkForMatch() {
+function checkMatch() {
     if (firstCard.dataset.value === secondCard.dataset.value) {
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
@@ -73,6 +91,7 @@ function checkForMatch() {
         firstCard = null;
         secondCard = null;
         lockBoard = false;
+        checkVictory();
     }  
     else{
         setTimeout(() => {
@@ -99,7 +118,7 @@ function startTimer() {
 }
 
 function checkVictory() {
-    if (matchedCount === urls.length) {
+    if (matchedCount === cards.length/2) {
         clearInterval(timerInterval);
         const resultDiv = document.getElementById('result');
         resultDiv.textContent = `Bien joué! Vous avez gagné en ${moves} mouvements et ${formatTime(seconds)}.`;
