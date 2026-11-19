@@ -1,4 +1,4 @@
-let dimension = 150;
+const dimension = 300;
 let imgStart = Math.floor(Math.random() * 100);
 
 let firstCard = null;
@@ -49,6 +49,7 @@ function initGame() {
         card.dataset.index = index;
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Carte ${index + 1}`);
         card.addEventListener('click', () => handleCardClick(card));
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -69,6 +70,9 @@ function handleCardClick(card) {
     if (!card.querySelector('img')) {
         const frontFace = document.createElement('img');
         frontFace.src = card.dataset.value;
+        frontFace.alt = 'Image de la carte';
+        frontFace.width = dimension;
+        frontFace.height = dimension;
         frontFace.classList.add('front-face');
         card.appendChild(frontFace);
     }
@@ -125,6 +129,6 @@ function checkVictory() {
     }
 }
 
+document.getElementById('restart').addEventListener('click', initGame);
+
 initGame();
-console.log(urls);
-console.log(cards);

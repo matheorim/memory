@@ -2,14 +2,20 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Jeu de memory : retrouvez toutes les paires d'images le plus vite possible.">
         <title>Memory Game</title>
-        <script src="JS/script.js" defer></script>
+        <link rel="icon" type="image/png" href="favicon.png">
         <link rel="stylesheet" href="CSS/style.css">
+        <script src="JS/script.js" defer></script>
     </head>
     <body>
-    <div id="timer">00:00</div>
-    <div id="game-board"></div>
-    <div id="result"></div>
+        <main>
+            <h1>Memory</h1>
+            <p id="timer" aria-label="Temps écoulé">00:00</p>
+            <div id="game-board"></div>
+            <p id="result" role="status" aria-live="polite"></p>
+            <button id="restart" type="button">Nouvelle partie</button>
+        </main>
     </body>
 </html>
